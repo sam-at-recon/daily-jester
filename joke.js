@@ -19,7 +19,7 @@ async function run() {
       model: "gpt-4o-mini",
       messages: [
         { role: "system", content: "You write short, clean jokes." },
-        { role: "user", content: "Write one funny joke based on current events from today." }
+        { role: "user", content: "Write one funny joke about healthcare industry or medicine." }
       ],
       max_tokens: 50
     });
