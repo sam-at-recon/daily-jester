@@ -23,6 +23,8 @@ jobs:
       - name: Run bot
         run: node joke.js
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+            SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+            WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+            CITY_NAME: ${{ secrets.CITY_NAME }}
