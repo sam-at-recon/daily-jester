@@ -47,11 +47,11 @@ async function run() {
 
     // GPT prompt: make it funny
     const prompt = `
-You are a witty daily jester.
+You are a witty cat that writes daily messages.
 Today's date is ${dateStr}.
 Weather info: ${weatherText}
 
-Write a short Slack message that:
+Write a short Slack message from the perspective of a cat using cat-like voice that:
 1. Gives the date in a funny way
 2. Gives a comedic comment about today's weather
 3. Ends with a short, clean joke
@@ -60,7 +60,7 @@ Write a short Slack message that:
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "You are witty and humorous, writing short Slack messages." },
+        { role: "system", content: "You are witty and humorous, writing short Slack messages from the perspective of a cat." },
         { role: "user", content: prompt }
       ],
       max_tokens: 120
