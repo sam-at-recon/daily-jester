@@ -63,7 +63,7 @@ Write a short Slack message from the perspective of a cat using cat-like voice t
         { role: "system", content: "You are witty and humorous, writing short Slack messages from the perspective of a cat." },
         { role: "user", content: prompt }
       ],
-      max_tokens: 120
+      max_tokens: 200
     });
 
     const message = response.choices?.[0]?.message?.content?.trim();
