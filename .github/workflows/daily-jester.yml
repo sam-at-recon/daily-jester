@@ -2,7 +2,7 @@ name: Tomato
 
 on:
   schedule:
-    - cron: "0 14 * * 1-5"         # 9:00 AM, Monday-Friday
+    - cron: "38 13 * * 1-5"         # Queuing 8:38 AM, Monday-Friday
   workflow_dispatch:     # Allows manual run
 
 jobs:
