@@ -25,12 +25,17 @@ function loadCache() {
   try {
     if (fs.existsSync(CACHE_FILE)) {
       const data = fs.readFileSync(CACHE_FILE, "utf-8");
-      return JSON.parse(data);
+      const cache = JSON.parse(data);
+      // Ensure history array exists
+      if (!cache.history) {
+        cache.history = [];
+      }
+      return cache;
     }
   } catch {
     // If cache is corrupted, start fresh
   }
-  return {};
+  return { history: [] };
 }
 
 // Save cache file
@@ -95,16 +100,23 @@ async function run() {
       weatherText = `The weather in ${weather.city}, ${weather.region} is ${weather.condition} with a temperature of ${weather.temp}°F.`;
     }
 
+    // Build list of previous jokes to avoid
+    const previousJokes = cache.history.length > 0 
+      ? "Do NOT use any of these joke topics/themes that have been used before:\n" + cache.history.map((m, i) => `${i + 1}. ${m}`).join("\n")
+      : "";
+
     // GPT prompt: make it funny
     const prompt = `
 You are a witty cat that writes daily messages.
 Today's date is ${dateStr}.
 Weather info: ${weatherText}
 
+${previousJokes}
+
 Write a short Slack message from the perspective of a cat using cat-like voice that:
 1. Gives the date in a funny way
 2. Gives a comedic comment about today's weather
-3. Ends with a short, clean joke
+3. Ends with a short, clean joke (MUST be unique and different from all previous jokes)
 `;
 
     const response = await openai.chat.completions.create({
@@ -121,6 +133,8 @@ Write a short Slack message from the perspective of a cat using cat-like voice t
 
     // Cache the message for today
     cache[todayKey] = message;
+    // Add to history to prevent reuse
+    cache.history.push(message);
     saveCache(cache);
 
     await slack.chat.postMessage({
